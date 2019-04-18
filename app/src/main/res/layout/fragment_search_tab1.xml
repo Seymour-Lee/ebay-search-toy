@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchTab1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/search_tab1_keyword_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Keyword" />
+
+        <EditText
+            android:id="@+id/search_tab1_keyword_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter Keyword"
+            android:inputType="textPersonName"
+            android:text="iphone x" />
+
+        <TextView
+            android:id="@+id/search_tab1_category_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category" />
+
+        <Spinner
+            android:id="@+id/search_tab1_category_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/search_category_spinner_items"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:id="@+id/search_tab1_condition_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Condition" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/search_tab1_condition_new_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="New" />
+
+            <CheckBox
+                android:id="@+id/search_tab1_condition_used_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Used" />
+
+            <CheckBox
+                android:id="@+id/search_tab1_condition_unspecified_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Unspecified" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/search_tab1_shipping_options_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shipping Options" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/search_tab1_shipping_local_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Local Piclup" />
+
+            <CheckBox
+                android:id="@+id/search_tab1_shipping_free_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Free Shipping" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/search_tab1_nearby_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Enable Nearby Search" />
+
+            <CheckBox
+                android:id="@+id/search_tab1_nearby_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/search_tab1_miles_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Miles from"
+            android:inputType="textPersonName"
+            android:text="10" />
+
+        <TextView
+            android:id="@+id/search_tab1_from_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="From" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/search_tab1_from_radio_group">
+
+                    <RadioButton
+                        android:id="@+id/search_tab1_local_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:id="@+id/search_tab1_zipcode_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_weight="1" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="Current Location"
+                    android:textSize="24sp" />
+
+                <!--<EditText-->
+                    <!--android:id="@+id/search_tab1_zipcode_input"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:ems="10"-->
+                    <!--android:inputType="textPersonName" />-->
+                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:id="@+id/search_tab1_zipcode_input"
+                    >
+
+                </android.support.v7.widget.AppCompatAutoCompleteTextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/search_tab1_search_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="SearchKeyword"
+                android:text="SEARCH" />
+
+            <Button
+                android:id="@+id/search_tab1_clear_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="InitSearchForm"
+                android:text="CLEAR" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Product Search</string>
+    <string name="search_tab1_title">SEARCH</string>
+    <string name="search_tab2_title">WISH LIST</string>
+    <string name="search_button">search</string>
+    <string name="title_activity_results">Results</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_details">Details</string>
+</resources>
