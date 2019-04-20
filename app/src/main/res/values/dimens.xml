@@ -1,3 +1,16 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="shipping_table_row_height">40dp</dimen>
+    <dimen name="shipping_table_second_col_left_margin">16dp</dimen>
+    <dimen name="shipping_table_title_font_size">18dp</dimen>
+    <dimen name="shipping_table_row_font_size">16dp</dimen>
+    <dimen name="product_table_row_height">40dp</dimen>
+    <dimen name="product_table_second_col_left_margin">16dp</dimen>
+    <dimen name="product_table_title_font_size">18dp</dimen>
+    <dimen name="product_table_row_font_size">16dp</dimen>
+    <dimen name="search_text_left_margin">16dp</dimen>
+    <dimen name="search_input_left_margin">24dp</dimen>
+    <dimen name="search_input_right_margin">32dp</dimen>
+    <dimen name="search_top_margin">4dp</dimen>
+    <dimen name="search_input_font_size">16dp</dimen>
 </resources>

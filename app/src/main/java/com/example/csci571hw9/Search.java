@@ -1,10 +1,16 @@
 package com.example.csci571hw9;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,17 +32,13 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 // TODO:
-// 2. search form layout                    11
-// 3. search form validation                12
-// 6. result item css                       5
-// 8. details layout                        10
-// 11. store web using browser              7
-// 12. similar item layout                  8
-// 14. no result display                    14
-//     layout置顶，没结果就设置visible，view设gone
-//                否则gone，view设sisible
+// 2. Star Icon in shipping tab
+// 3. in nodejs, store item json into file
 
 
 
@@ -90,11 +92,14 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private void updateWishlist(){
+    public void updateWishlist(){
         recyclerView = findViewById(R.id.wishlist_recycler);
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
+
+        TextView noResultsView = findViewById(R.id.wishlist_no_results);
+        noResultsView.setVisibility(View.INVISIBLE);
 
         try{
             String filename = "wishlist";
@@ -111,6 +116,8 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
             inputStream.close();
             mAdapter = new ResultsRecyclerViewAdapter(object, this);
             recyclerView.setAdapter(mAdapter);
+            if(object.length() == 0) noResultsView.setVisibility(View.VISIBLE);
+            else noResultsView.setVisibility(View.INVISIBLE);
             TextView summaryItem = findViewById(R.id.wishlist_summary_item);
             TextView summaryPrice = findViewById(R.id.wishlist_summary_price);
             String itemInfo = "  Wishlist total(" + object.length() + " items):";
@@ -152,6 +159,9 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
         EditText milesEdit = findViewById(R.id.search_tab1_miles_input);
         RadioGroup fromGroup = findViewById(R.id.search_tab1_from_radio_group);
         EditText zipcodeEdit = findViewById(R.id.search_tab1_zipcode_input);
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
 
         HashMap<String, String> category2param = new HashMap<>();
         category2param.put("All", "all");
@@ -165,6 +175,18 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
         category2param.put("Video Games & Consoles", "video");
 
         try{
+            String postalCode = "90007";
+            if(fromGroup.getCheckedRadioButtonId() == R.id.search_tab1_zipcode_radio){
+                postalCode = zipcodeEdit.getText().toString();
+            }
+            else if(fromGroup.getCheckedRadioButtonId() ==R.id.search_tab1_local_radio){
+                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                double longitude = location.getLongitude();
+                double latitude = location.getLatitude();
+                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                postalCode = addresses.get(0).getPostalCode();
+            }
+
             params.put("keyword", keywordEdit.getText().toString());
             params.put("category", category2param.get(categorySpinner.getSelectedItem().toString()));
             params.put("new", Boolean.toString(newCheckBox.isChecked()));
@@ -174,7 +196,7 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
             params.put("free", Boolean.toString(freeCheckBox.isChecked()));
             params.put("distance", milesEdit.getText().toString());
             params.put("from", "location");
-            params.put("zipcode", "90007");
+            params.put("zipcode", postalCode);
 
 
         }
@@ -204,8 +226,60 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
     }
 
     private boolean CheckValidation(){
+        // TODO: validate keyword and zipcode textView. display error message if necessary
+        Boolean isValid = true;
+        TextView keywordError = findViewById(R.id.search_keyword_error);
+        TextView zipcodeEmpty = findViewById(R.id.search_zipcode_empty_error);
+        TextView zipcodeInvalid = findViewById(R.id.search_zipcode_invalid_error);
+        TextView distanceEmpty = findViewById(R.id.search_distance_empty_error);
+        TextView distanceInvalid = findViewById(R.id.search_distance_invalid_error);
+        keywordError.setVisibility(View.GONE);
+        zipcodeEmpty.setVisibility(View.GONE);
+        zipcodeInvalid.setVisibility(View.GONE);
+        distanceEmpty.setVisibility(View.GONE);
+        distanceInvalid.setVisibility(View.GONE);
+        EditText keywordEdit = findViewById(R.id.search_tab1_keyword_input);
+        String keywordString = keywordEdit.getText().toString();
+        if(keywordString.trim().equals("")){
+            keywordError.setVisibility(View.VISIBLE);
+            isValid = false;
+        }
+        CheckBox enableNearbyCheckbox = findViewById(R.id.search_tab1_nearby_checkbox);
+        if(enableNearbyCheckbox.isChecked()){
+            EditText distanceEdit = findViewById(R.id.search_tab1_miles_input);
+            String distanceString = distanceEdit.getText().toString().trim();
+            if(distanceString.equals("")){
+                distanceEmpty.setVisibility(View.VISIBLE);
+                isValid = false;
+            }
+            else{
+                Pattern distancePattern = Pattern.compile("^[0-9]+$");
+                if(!distancePattern.matcher(distanceString).matches()){
+                    distanceInvalid.setVisibility(View.VISIBLE);
+                    isValid = false;
+                }
+            }
 
-        return true;
+            // if input zipcode manually
+            RadioGroup fromGroup = findViewById(R.id.search_tab1_from_radio_group);
+            if(fromGroup.getCheckedRadioButtonId() == R.id.search_tab1_zipcode_radio){
+                EditText zipcodeInput = findViewById(R.id.search_tab1_zipcode_input);
+                String zipcodeString = zipcodeInput.getText().toString().trim();
+                if(zipcodeString.equals("")){
+                    zipcodeEmpty.setVisibility(View.VISIBLE);
+                    isValid = false;
+                }
+                else{
+                    Pattern zipcodePattern = Pattern.compile("^[0-9]{5}$");
+                    if(!zipcodePattern.matcher(zipcodeString).matches()){
+                        zipcodeInvalid.setVisibility(View.VISIBLE);
+                        isValid = false;
+                    }
+                }
+            }
+        }
+
+        return isValid;
     }
 
     public void InitSearchForm(){

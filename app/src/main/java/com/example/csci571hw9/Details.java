@@ -17,7 +17,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.telecom.Call;
+import android.text.Html;
+import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,9 +123,13 @@ public class Details extends AppCompatActivity implements DetailsTabProduct.OnFr
 
         final TabLayout tabLayout = (TabLayout)findViewById(R.id.details_tablayout);
         tabLayout.addTab(tabLayout.newTab().setText("PRODUCT"));
+        tabLayout.getTabAt(0).setIcon(R.drawable.information_variant_select);
         tabLayout.addTab(tabLayout.newTab().setText("SHIPPING"));
+        tabLayout.getTabAt(1).setIcon(R.drawable.truck_variant_not);
         tabLayout.addTab(tabLayout.newTab().setText("PHOTOS"));
+        tabLayout.getTabAt(2).setIcon(R.drawable.google_not);
         tabLayout.addTab(tabLayout.newTab().setText("SIMILAR"));
+        tabLayout.getTabAt(3).setIcon(R.drawable.equal_not);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager)findViewById(R.id.details_pager);
@@ -138,12 +145,30 @@ public class Details extends AppCompatActivity implements DetailsTabProduct.OnFr
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 Log.d(TAG, "onTabSelected: position is " + tab.getPosition());
-//               if(tab.getPosition() == 2){
-//                    setPhotosTabContent();
-//                }
-//                else if(tab.getPosition() == 3){
-//                    setSimilarsTabContent();
-//                }
+                if(tab.getPosition() == 0){
+                    tabLayout.getTabAt(0).setIcon(R.drawable.information_variant_select);
+                    tabLayout.getTabAt(1).setIcon(R.drawable.truck_variant_not);
+                    tabLayout.getTabAt(2).setIcon(R.drawable.google_not);
+                    tabLayout.getTabAt(3).setIcon(R.drawable.equal_not);
+                }
+                else if(tab.getPosition() == 1){
+                    tabLayout.getTabAt(0).setIcon(R.drawable.information_variant_not);
+                    tabLayout.getTabAt(1).setIcon(R.drawable.truck_variant_select);
+                    tabLayout.getTabAt(2).setIcon(R.drawable.google_not);
+                    tabLayout.getTabAt(3).setIcon(R.drawable.equal_not);
+                }
+                else if(tab.getPosition() == 2){
+                    tabLayout.getTabAt(0).setIcon(R.drawable.information_variant_not);
+                    tabLayout.getTabAt(1).setIcon(R.drawable.truck_variant_not);
+                    tabLayout.getTabAt(2).setIcon(R.drawable.google_select);
+                    tabLayout.getTabAt(3).setIcon(R.drawable.equal_not);
+                }
+                else if(tab.getPosition() == 3){
+                    tabLayout.getTabAt(0).setIcon(R.drawable.information_variant_not);
+                    tabLayout.getTabAt(1).setIcon(R.drawable.truck_variant_not);
+                    tabLayout.getTabAt(2).setIcon(R.drawable.google_not);
+                    tabLayout.getTabAt(3).setIcon(R.drawable.equal_select);
+                }
             }
 
             @Override
@@ -215,7 +240,8 @@ public class Details extends AppCompatActivity implements DetailsTabProduct.OnFr
             TextView brandView = findViewById(R.id.product_brand);
             titleView.setText(product.getString("title"));
             String shippingString = shipping.getString("cost").equals("Free Shipping")? "Free Shipping": shipping.getString("cost") + " Shipping";
-            priceandshippingView.setText(product.getString("price") + " " + shippingString);
+            String priceString = "<font color='#6A13EC'><b>" + product.getString("price") + "</b></font>" + " With " + shippingString;
+            priceandshippingView.setText(Html.fromHtml(priceString), TextView.BufferType.SPANNABLE);
             subtitleView.setText(product.getString("subtitle"));
             priceView.setText(product.getString("price"));
             JSONArray specifics = product.getJSONArray("specifics");
@@ -254,7 +280,9 @@ public class Details extends AppCompatActivity implements DetailsTabProduct.OnFr
             TextView returnWithinView = findViewById(R.id.shipping_return);
             TextView refundView = findViewById(R.id.shipping_refund);
             TextView shippedByView = findViewById(R.id.shipping_shipped);
-            storeNameView.setText(seller.getString("store"));
+            SpannableString content = new SpannableString(seller.getString("store"));
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            storeNameView.setText(content);
             storeNameView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -346,6 +374,9 @@ public class Details extends AppCompatActivity implements DetailsTabProduct.OnFr
                 try{
                     Log.d(TAG, response.toString(10));
                     photos = response;
+                    TextView noResultsView = findViewById(R.id.photos_no_results);
+                    if(response.length() == 0) noResultsView.setVisibility(View.VISIBLE);
+                    else noResultsView.setVisibility(View.INVISIBLE);
                     setPhotosTabContent();
                 }
                 catch (Exception ex){
@@ -384,9 +415,9 @@ public class Details extends AppCompatActivity implements DetailsTabProduct.OnFr
         similarsAdapter = new DetailsSimilarsRecyclerAdapter(currentDisplay, Details.this);
         similarsRecycler.setAdapter(similarsAdapter);
 
-
         final Spinner keySpinner = findViewById(R.id.similar_sort_key_spinner);
         final Spinner orderSpinner = findViewById(R.id.similar_sort_order_spinner);
+        orderSpinner.setEnabled(false);
         keySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -591,6 +622,9 @@ public class Details extends AppCompatActivity implements DetailsTabProduct.OnFr
                         similars.add(new SimilarObject(response.getJSONObject(i)));
                     }
                     currentDisplay = new ArrayList<>(similars);
+                    TextView noResultsView = findViewById(R.id.similar_no_results);
+                    if(currentDisplay.size() == 0) noResultsView.setVisibility(View.VISIBLE);
+                    else noResultsView.setVisibility(View.INVISIBLE);
                     setSimilarsTabContent();
                 }
                 catch (Exception ex){

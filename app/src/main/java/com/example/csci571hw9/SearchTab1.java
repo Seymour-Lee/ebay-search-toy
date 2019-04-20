@@ -15,6 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +99,7 @@ public class SearchTab1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_search_tab1, container, false);
+        final View view = inflater.inflate(R.layout.fragment_search_tab1, container, false);
         final Context mContext = getActivity();
         final AppCompatAutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.search_tab1_zipcode_input);
         final SearchAutoCompleteAdapter searchAutoCompleteAdapter = new SearchAutoCompleteAdapter(mContext, android.R.layout.simple_dropdown_item_1line);
@@ -181,6 +187,35 @@ public class SearchTab1 extends Fragment {
                 return false;
             }
         });
+
+        CheckBox enableNearbyCheckbox = view.findViewById(R.id.search_tab1_nearby_checkbox);
+        final LinearLayout nearbyInputs = view.findViewById(R.id.search_nearby_inputs);
+        enableNearbyCheckbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(((CheckBox) v).isChecked()){
+                    nearbyInputs.setVisibility(View.VISIBLE);
+                }
+                else{
+                    nearbyInputs.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        RadioGroup fromGroup = view.findViewById(R.id.search_tab1_from_radio_group);
+        fromGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                EditText zipcodeInput = view.findViewById(R.id.search_tab1_zipcode_input);
+                if(checkedId == R.id.search_tab1_zipcode_radio){
+                    zipcodeInput.setEnabled(true);
+                }
+                if(checkedId == R.id.search_tab1_local_radio){
+                    zipcodeInput.setEnabled(false);
+                }
+            }
+        });
+
 
         return view;
     }

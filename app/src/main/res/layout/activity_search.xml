@@ -12,11 +12,16 @@
         android:orientation="vertical">
 
         <android.support.design.widget.TabLayout
-            android:layout_width="395dp"
-            android:layout_height="wrap_content"
             android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabBackground="@color/colorPurple"
+            app:tabIndicatorColor="#ded2f9"
+            app:tabRippleColor="@color/colorPurple"
+            app:tabSelectedTextColor="#ded2f9"
+            app:tabTextColor="#b399e6"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="16dp"/>
+            tools:layout_editor_absoluteY="16dp" />
 
         <android.support.v4.view.ViewPager
             android:layout_width="match_parent"

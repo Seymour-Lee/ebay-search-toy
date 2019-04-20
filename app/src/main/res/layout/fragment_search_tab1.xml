@@ -14,27 +14,47 @@
             android:id="@+id/search_tab1_keyword_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_text_left_margin"
+            android:layout_marginTop="@dimen/search_top_margin"
             android:text="Keyword" />
 
         <EditText
             android:id="@+id/search_tab1_keyword_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_input_left_margin"
+            android:layout_marginTop="@dimen/search_top_margin"
+            android:layout_marginRight="@dimen/search_input_right_margin"
             android:ems="10"
             android:hint="Enter Keyword"
             android:inputType="textPersonName"
-            android:text="iphone x" />
+            android:text="iphone x"
+            android:textSize="@dimen/search_input_font_size" />
+
+        <TextView
+            android:id="@+id/search_keyword_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_text_left_margin"
+            android:text="Please enter mandatory field"
+            android:textColor="@color/colorRed"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/search_tab1_category_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_text_left_margin"
+            android:layout_marginTop="@dimen/search_top_margin"
             android:text="Category" />
 
         <Spinner
             android:id="@+id/search_tab1_category_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_input_left_margin"
+            android:layout_marginTop="@dimen/search_top_margin"
+            android:layout_marginRight="@dimen/search_input_right_margin"
             android:entries="@array/search_category_spinner_items"
             android:spinnerMode="dropdown" />
 
@@ -42,11 +62,16 @@
             android:id="@+id/search_tab1_condition_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_text_left_margin"
+            android:layout_marginTop="@dimen/search_top_margin"
             android:text="Condition" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_input_left_margin"
+            android:layout_marginTop="@dimen/search_top_margin"
+            android:layout_marginRight="@dimen/search_input_right_margin"
             android:orientation="horizontal">
 
             <CheckBox
@@ -55,32 +80,40 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="New" />
+                android:text="New"
+                android:textSize="@dimen/search_input_font_size" />
 
             <CheckBox
                 android:id="@+id/search_tab1_condition_used_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Used" />
+                android:text="Used"
+                android:textSize="@dimen/search_input_font_size" />
 
             <CheckBox
                 android:id="@+id/search_tab1_condition_unspecified_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Unspecified" />
+                android:text="Unspecified"
+                android:textSize="@dimen/search_input_font_size" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/search_tab1_shipping_options_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_text_left_margin"
+            android:layout_marginTop="@dimen/search_top_margin"
             android:text="Shipping Options" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_input_left_margin"
+            android:layout_marginTop="@dimen/search_top_margin"
+            android:layout_marginRight="@dimen/search_input_right_margin"
             android:orientation="horizontal">
 
             <CheckBox
@@ -88,19 +121,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Local Piclup" />
+                android:text="Local Piclup"
+                android:textColorLink="@color/colorOrange"
+                android:textSize="@dimen/search_input_font_size" />
 
             <CheckBox
                 android:id="@+id/search_tab1_shipping_free_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Free Shipping" />
+                android:text="Free Shipping"
+                android:textColorLink="@color/colorOrange"
+                android:textSize="@dimen/search_input_font_size" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_text_left_margin"
+            android:layout_marginTop="@dimen/search_top_margin"
+            android:layout_marginRight="@dimen/search_input_right_margin"
             android:orientation="horizontal">
 
             <TextView
@@ -117,103 +157,174 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/search_tab1_miles_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Miles from"
-            android:inputType="textPersonName"
-            android:text="10" />
-
-        <TextView
-            android:id="@+id/search_tab1_from_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="From" />
-
         <LinearLayout
+            android:id="@+id/search_nearby_inputs"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <EditText
+                android:id="@+id/search_tab1_miles_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/search_input_left_margin"
+                android:layout_marginTop="@dimen/search_top_margin"
+                android:layout_marginRight="@dimen/search_input_right_margin"
+                android:ems="10"
+                android:hint="Miles from"
+                android:inputType="textPersonName"
+                android:text="10"
+                android:textSize="@dimen/search_input_font_size"
+                android:visibility="visible" />
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/search_tab1_from_radio_group">
+            <TextView
+                android:id="@+id/search_distance_empty_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/search_text_left_margin"
+                android:text="Please enter mandatory field"
+                android:textColor="@color/colorRed"
+                android:visibility="gone" />
 
-                    <RadioButton
-                        android:id="@+id/search_tab1_local_radio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:checked="true"/>
+            <TextView
+                android:id="@+id/search_distance_invalid_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/search_text_left_margin"
+                android:text="Please enter right distance"
+                android:textColor="@color/colorRed"
+                android:visibility="gone" />
 
-                    <RadioButton
-                        android:id="@+id/search_tab1_zipcode_radio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_weight="1" />
-
-                </RadioGroup>
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/search_tab1_from_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/search_text_left_margin"
+                android:layout_marginTop="@dimen/search_top_margin"
+                android:text="From" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="80dp"
+                android:layout_marginLeft="@dimen/search_input_left_margin"
+                android:layout_marginTop="@dimen/search_top_margin"
+                android:layout_marginRight="@dimen/search_input_right_margin"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView6"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <RadioGroup
+                        android:id="@+id/search_tab1_from_radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/search_tab1_local_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:textColorLink="@color/colorOrange" />
+
+                        <RadioButton
+                            android:id="@+id/search_tab1_zipcode_radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:textColorLink="@color/colorOrange" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:text="Current Location"
-                    android:textSize="24sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <!--<EditText-->
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Current Location"
+                        android:textColor="@color/user_score_background"
+                        android:textSize="@dimen/search_input_font_size" />
+
+                    <!--<EditText-->
                     <!--android:id="@+id/search_tab1_zipcode_input"-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="40dp"-->
                     <!--android:layout_weight="1"-->
                     <!--android:ems="10"-->
                     <!--android:inputType="textPersonName" />-->
-                <android.support.v7.widget.AppCompatAutoCompleteTextView
-                    android:layout_height="40dp"
-                    android:layout_width="match_parent"
-                    android:id="@+id/search_tab1_zipcode_input"
-                    >
+                    <android.support.v7.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/search_tab1_zipcode_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:enabled="false"
+                        android:hint="zipcode"
+                        android:textColor="@color/user_score_background"
+                        android:textSize="@dimen/search_input_font_size">
 
-                </android.support.v7.widget.AppCompatAutoCompleteTextView>
+                    </android.support.v7.widget.AppCompatAutoCompleteTextView>
+                </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/search_zipcode_empty_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_text_left_margin"
+            android:text="Please enter mandatory field"
+            android:textColor="@color/colorRed"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/search_zipcode_invalid_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/search_text_left_margin"
+            android:text="Please enter right zipcode"
+            android:textColor="@color/colorRed"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/search_input_left_margin"
+            android:layout_marginTop="@dimen/search_top_margin"
+            android:layout_marginRight="@dimen/search_input_right_margin"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/search_tab1_search_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
+                android:background="@color/colorOrange"
                 android:onClick="SearchKeyword"
-                android:text="SEARCH" />
+                android:text="SEARCH"
+                android:textColor="#ffffff" />
 
             <Button
                 android:id="@+id/search_tab1_clear_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
+                android:background="@color/colorOrange"
                 android:onClick="InitSearchForm"
-                android:text="CLEAR" />
+                android:text="CLEAR"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
     </LinearLayout>

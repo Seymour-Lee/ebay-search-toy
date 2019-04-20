@@ -80,7 +80,8 @@ public class SearchTab2 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search_tab2, container, false);
-
+//        final Context mContext = getActivity();
+//        ((Search) mContext).updateWishlist();
         return view;
     }
 

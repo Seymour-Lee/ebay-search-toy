@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".SearchTab2">
 
+    <TextView
+        android:id="@+id/wishlist_no_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="No results" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/wishlist_recycler"
         android:layout_width="match_parent"

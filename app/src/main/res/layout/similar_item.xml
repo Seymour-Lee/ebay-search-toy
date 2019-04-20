@@ -31,17 +31,24 @@
                     android:id="@+id/similar_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="title" />
+                    android:gravity="center"
+                    android:maxLines="3"
+                    android:minLines="3"
+                    android:text="title"
+                    android:textColor="@color/user_score_background"
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/similar_shipping"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/fab_margin"
                         android:layout_weight="1"
                         android:text="shipping_info" />
 
@@ -49,6 +56,7 @@
                         android:id="@+id/similar_days"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/fab_margin"
                         android:layout_weight="1"
                         android:text="days" />
                 </LinearLayout>
@@ -57,8 +65,12 @@
                     android:id="@+id/similar_cost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="@dimen/fab_margin"
                     android:gravity="end"
-                    android:text="cost" />
+                    android:text="cost"
+                    android:textColor="@color/colorPurple"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </LinearLayout>

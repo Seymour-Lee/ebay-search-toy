@@ -113,11 +113,13 @@ public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecy
                         if(inCart(item.getString("id"))){
                             Log.d(TAG, "onClick: wishlist icon: in cart, remove");
                             removeFromCart(item.getString("id"));
+                            Toast.makeText(mContext, results.getJSONObject(i).getString("title") + "was removed from wish list", Toast.LENGTH_SHORT).show();
                             viewHolder.wishlistIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.cart_plus_grey));
                         }
                         else{
                             Log.d(TAG, "onClick: wishlist icon: off cart, add");
                             addToCart(item);
+                            Toast.makeText(mContext, results.getJSONObject(i).getString("title") + "was added to wish list", Toast.LENGTH_SHORT).show();
                             viewHolder.wishlistIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.cart_remove_orange));
                         }
 
@@ -135,6 +137,10 @@ public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecy
                             results = newArray;
                             notifyItemRemoved(i);
                             notifyItemRangeChanged(i, results.length());
+
+                            TextView noResultsView = ((Search)mContext).findViewById(R.id.wishlist_no_results);
+                            if(results.length() == 0) noResultsView.setVisibility(View.VISIBLE);
+                            else noResultsView.setVisibility(View.INVISIBLE);
 
                             Activity ac = (Search)mContext;
                             TextView summaryItem = ac.findViewById(R.id.wishlist_summary_item);

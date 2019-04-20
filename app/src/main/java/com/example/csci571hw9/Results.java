@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -55,9 +56,11 @@ public class Results extends AppCompatActivity {
         ProgressBar progressBar = findViewById(R.id.results_progress_bar);
         TextView loadingText = findViewById(R.id.results_loading_textview);
         TextView summaryView = findViewById(R.id.results_summary);
+        TextView noResultsView = findViewById(R.id.results_no_results);
         progressBar.setVisibility(View.VISIBLE);
         loadingText.setVisibility(View.VISIBLE);
         summaryView.setVisibility(View.GONE);
+        noResultsView.setVisibility(View.INVISIBLE);
 
 
         String url = "";
@@ -96,8 +99,11 @@ public class Results extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     loadingText.setVisibility(View.GONE);
                     summaryView.setVisibility(View.VISIBLE);
-                    summaryView.setText("Showing " + response.length() + " results for " + getIntent().getStringExtra("keyword"));
-
+                    String resultText = "Showing <font color='#f94b1f'>" + response.length() + "</font> results for <font color='#f94b1f'>" + getIntent().getStringExtra("keyword") + "</font>";
+                    summaryView.setText(Html.fromHtml(resultText), TextView.BufferType.SPANNABLE);
+                    TextView noResultsView = findViewById(R.id.results_no_results);
+                    if(response.length() == 0) noResultsView.setVisibility(View.VISIBLE);
+                    else noResultsView.setVisibility(View.INVISIBLE);
                     results = response;
                     mAdapter = new ResultsRecyclerViewAdapter(results, Results.this);
                     recyclerView.setAdapter(mAdapter);
