@@ -29,7 +29,9 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
@@ -39,9 +41,6 @@ import java.util.regex.Pattern;
 // TODO:
 // 1. Skip rows in details tab, which are missing
 // 2. Star Icon in shipping tab
-// 3. not enable nearby search, how to deal with zipcode?
-// 4. do not chop image
-// 5. clear button
 
 
 public class Search extends AppCompatActivity implements SearchTab1.OnFragmentInteractionListener, SearchTab2.OnFragmentInteractionListener{
@@ -55,6 +54,21 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         Log.d(TAG, "hello debugger");
+
+        try{
+            String filename = "wishlist";
+            File file = new File(filename);
+            if(file.exists() == false) {
+                FileOutputStream outputStream;
+                outputStream = openFileOutput(filename, MODE_PRIVATE);
+                outputStream.write("[]".getBytes());
+                outputStream.close();
+            }
+        }
+        catch (Exception e){
+            Log.d(TAG, "onCreate: " + e.toString());
+        }
+
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.addTab(tabLayout.newTab().setText("Search"));
@@ -175,8 +189,8 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
         category2param.put("Music", "music");
         category2param.put("Video Games & Consoles", "video");
 
+        String postalCode = "90007";
         try{
-            String postalCode = "90007";
             if(fromGroup.getCheckedRadioButtonId() == R.id.search_tab1_zipcode_radio){
                 postalCode = zipcodeEdit.getText().toString();
             }
@@ -187,7 +201,17 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
                 List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
                 postalCode = addresses.get(0).getPostalCode();
             }
+            Log.d(TAG, "getParameters: postalCode is " + postalCode);
 
+
+
+
+        }
+        catch (Exception ex){
+            Log.d(TAG, "getParameters: exception invoked: " + ex.toString());
+        }
+
+        try{
             params.put("keyword", keywordEdit.getText().toString());
             params.put("category", category2param.get(categorySpinner.getSelectedItem().toString()));
             params.put("new", Boolean.toString(newCheckBox.isChecked()));
@@ -195,14 +219,12 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
             params.put("unspecified", Boolean.toString(unspecifiedCheckBox.isChecked()));
             params.put("local", Boolean.toString(localCheckBox.isChecked()));
             params.put("free", Boolean.toString(freeCheckBox.isChecked()));
-            params.put("distance", milesEdit.getText().toString());
+            params.put("distance", milesEdit.getText().toString().equals("")? "10": milesEdit.getText().toString());
             params.put("from", "location");
             params.put("zipcode", postalCode);
-
-
         }
-        catch (Exception ex){
-            Log.d(TAG, "getParameters: exception invoked: " + ex.toString());
+        catch (Exception e){
+            Log.d(TAG, "getParameters: " + e.toString());
         }
 
         return params;
@@ -247,19 +269,19 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
         }
         CheckBox enableNearbyCheckbox = findViewById(R.id.search_tab1_nearby_checkbox);
         if(enableNearbyCheckbox.isChecked()){
-            EditText distanceEdit = findViewById(R.id.search_tab1_miles_input);
-            String distanceString = distanceEdit.getText().toString().trim();
-            if(distanceString.equals("")){
-                distanceEmpty.setVisibility(View.VISIBLE);
-                isValid = false;
-            }
-            else{
-                Pattern distancePattern = Pattern.compile("^[0-9]+$");
-                if(!distancePattern.matcher(distanceString).matches()){
-                    distanceInvalid.setVisibility(View.VISIBLE);
-                    isValid = false;
-                }
-            }
+//            EditText distanceEdit = findViewById(R.id.search_tab1_miles_input);
+//            String distanceString = distanceEdit.getText().toString().trim();
+//            if(distanceString.equals("")){
+//                distanceEmpty.setVisibility(View.VISIBLE);
+//                isValid = false;
+//            }
+//            else{
+//                Pattern distancePattern = Pattern.compile("^[0-9]+$");
+//                if(!distancePattern.matcher(distanceString).matches()){
+//                    distanceInvalid.setVisibility(View.VISIBLE);
+//                    isValid = false;
+//                }
+//            }
 
             // if input zipcode manually
             RadioGroup fromGroup = findViewById(R.id.search_tab1_from_radio_group);
@@ -284,6 +306,13 @@ public class Search extends AppCompatActivity implements SearchTab1.OnFragmentIn
     }
 
     public void InitSearchForm(){
-
+        EditText keywordEdit = findViewById(R.id.search_tab1_keyword_input);
+        EditText milesEdit = findViewById(R.id.search_tab1_miles_input);
+        EditText zipcodeEdit = findViewById(R.id.search_tab1_zipcode_input);
+        keywordEdit.setText("");
+        milesEdit.setText("10");
+        zipcodeEdit.setText("");
+        CheckBox enableNearby = findViewById(R.id.search_tab1_nearby_checkbox);
+        enableNearby.setChecked(false);
     }
 }

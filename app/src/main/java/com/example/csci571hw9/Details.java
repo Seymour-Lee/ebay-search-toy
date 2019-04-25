@@ -3,6 +3,7 @@ package com.example.csci571hw9;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -271,7 +273,7 @@ public class Details extends AppCompatActivity implements DetailsTabProduct.OnFr
             TextView storeNameView = findViewById(R.id.shipping_store_name);
             TextView feedbackScoreView = findViewById(R.id.shipping_feedback_score);
             CircularScoreView popularityView = findViewById(R.id.shipping_popularity);
-            TextView feedbackStarView = findViewById(R.id.shipping_feedback_star);
+            // TextView feedbackStarView = findViewById(R.id.shipping_feedback_star);
             TextView shippingCostView = findViewById(R.id.shipping_cost);
             TextView globalShippingView = findViewById(R.id.shipping_global);
             TextView handlingTimeView = findViewById(R.id.shipping_handling_time);
@@ -299,15 +301,87 @@ public class Details extends AppCompatActivity implements DetailsTabProduct.OnFr
             feedbackScoreView.setText(seller.getString("feedback"));
             // popularityView.setScore(Integer.valueOf(seller.getString("popularity")));
             popularityView.setScore((int)Double.parseDouble(seller.getString("popularity")));
-            feedbackStarView.setText(seller.getString("rating"));
+            // feedbackStarView.setText(seller.getString("rating"));
             shippingCostView.setText(shipping.getString("cost"));
             globalShippingView.setText(product.getString("golablshipping").equals("true")? "Yes": "No");
             handlingTimeView.setText(shipping.getString("handle_time"));
-            conditionView.setText(product.getString("conditiondescription"));
+            String conditionId = shipping.has("condition_id")? shipping.getString("condition_id"): "1000";
+            String conditionString = "";
+            if(conditionId.equals("1000")){
+                conditionString = "New";
+            }
+            else if(conditionId.equals("1500")){
+                conditionString = "New other";
+            }
+            else if(conditionId.equals("1750")){
+                conditionString = "New with defects";
+            }
+            else if(conditionId.equals("2000")){
+                conditionString = "Manufacturer refurbished";
+            }
+            else if(conditionId.equals("2500")){
+                conditionString = "Seller refurbished";
+            }
+            else if(conditionId.equals("3000")){
+                conditionString = "Used";
+            }
+            else if(conditionId.equals("4000")){
+                conditionString = "Very good";
+            }
+            else if(conditionId.equals("5000")){
+                conditionString = "Good";
+            }
+            else if(conditionId.equals("6000")){
+                conditionString = "Acceptable";
+            }
+            else if(conditionId.equals("7000")){
+                conditionString = "For parts or not working";
+            }
+            conditionView.setText(conditionString);
             policyView.setText(product.getString("returnaccepted"));
             returnWithinView.setText(product.getString("returnwithin"));
             refundView.setText(product.getString("refund"));
             shippedByView.setText(product.getString("shippedby"));
+
+            ImageView feedbackStarImageView = findViewById(R.id.feedback_star);
+            String colorString = seller.getString("rating");
+            if (colorString.equals("blue")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_blue);
+            }
+            else if (colorString.equals("green")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_green);
+            }
+            else if (colorString.equals("purple")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_purple);
+            }
+            else if (colorString.equals("red")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_red);
+            }
+            else if (colorString.equals("turquoise")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_turquoise);
+            }
+            else if (colorString.equals("yellow")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_yellow);
+            }
+            else if (colorString.equals("greenshooting")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_shooting_green);
+            }
+            else if (colorString.equals("purpleshooting")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_shooting_purple);
+            }
+            else if (colorString.equals("redshooting")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_shooting_red);
+            }
+            else if (colorString.equals("silvershooting")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_shooting_silver);
+            }
+            else if (colorString.equals("turquoiseshooting")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_shooting_turquoise);
+            }
+            else if (colorString.equals("yellowshooting")){
+                feedbackStarImageView.setImageResource(R.drawable.ic_action_star_circle_shooting_yellow);
+            }
+
 
         }
         catch (Exception ex){

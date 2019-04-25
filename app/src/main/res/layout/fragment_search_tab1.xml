@@ -28,7 +28,6 @@
             android:ems="10"
             android:hint="Enter Keyword"
             android:inputType="textPersonName"
-            android:text="iphone x"
             android:textSize="@dimen/search_input_font_size" />
 
         <TextView
@@ -79,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:checked="true"
+                android:checked="false"
                 android:text="New"
                 android:textSize="@dimen/search_input_font_size" />
 
@@ -174,6 +173,7 @@
                 android:ems="10"
                 android:hint="Miles from"
                 android:inputType="textPersonName"
+                android:text="10"
                 android:textSize="@dimen/search_input_font_size"
                 android:visibility="visible" />
 
@@ -321,7 +321,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@color/colorOrange"
-                android:onClick="InitSearchForm"
                 android:text="CLEAR"
                 android:textColor="#ffffff" />
         </LinearLayout>

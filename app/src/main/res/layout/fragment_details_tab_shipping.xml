@@ -131,7 +131,7 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="wrap_content" >
 
                         <TextView
                             android:id="@+id/textView14"
@@ -142,14 +142,23 @@
                             android:textColor="@color/user_score_background"
                             android:textSize="@dimen/shipping_table_row_font_size" />
 
-                        <TextView
-                            android:id="@+id/shipping_feedback_star"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/shipping_table_row_height"
+                        <ImageView
+                            android:id="@+id/feedback_star"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_marginLeft="@dimen/shipping_table_second_col_left_margin"
-                            android:gravity="center_vertical"
-                            android:text="TODO!!!"
-                            android:textSize="@dimen/shipping_table_row_font_size" />
+                            android:paddingLeft="-10dp"
+                            android:gravity="center_horizontal|left"
+                            android:src="@drawable/ic_action_star_circle" />
+                        <!--<Button-->
+                            <!--android:id="@+id/feedback_star"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:textAlignment="center"-->
+                            <!--android:background="@color/buttonWhite"-->
+                            <!--android:textColor="@color/textBlackColor"-->
+                            <!--android:visibility="visible"-->
+                            <!--/>-->
                     </TableRow>
                 </TableLayout>
             </LinearLayout>

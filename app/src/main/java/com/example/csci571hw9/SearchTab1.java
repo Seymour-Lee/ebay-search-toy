@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -216,6 +217,21 @@ public class SearchTab1 extends Fragment {
             }
         });
 
+        Button clearButton = view.findViewById(R.id.search_tab1_clear_button);
+        clearButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                EditText keywordEdit = view.findViewById(R.id.search_tab1_keyword_input);
+                EditText milesEdit = view.findViewById(R.id.search_tab1_miles_input);
+                EditText zipcodeEdit = view.findViewById(R.id.search_tab1_zipcode_input);
+                keywordEdit.setText("");
+                milesEdit.setText("10");
+                zipcodeEdit.setText("");
+                CheckBox enableNearby = view.findViewById(R.id.search_tab1_nearby_checkbox);
+                enableNearby.setChecked(false);
+                nearbyInputs.setVisibility(View.GONE);
+            }
+        });
 
         return view;
     }

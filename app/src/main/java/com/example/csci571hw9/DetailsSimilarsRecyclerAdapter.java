@@ -1,7 +1,10 @@
 package com.example.csci571hw9;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +48,14 @@ public class DetailsSimilarsRecyclerAdapter extends RecyclerView.Adapter<Details
             viewHolder.shippingView.setText(similars.get(i).shipping);
             viewHolder.daysView.setText(similars.get(i).days + " Days Left");
             viewHolder.costView.setText(similars.get(i).price);
+            viewHolder.cardView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    String postUrl = similars.get(i).url;
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(postUrl));
+                    mContext.startActivity(browserIntent);
+                }
+            });
         }
         catch(Exception ex){
             Log.d(TAG, "onBindViewHolder: " + ex.toString());
@@ -67,6 +78,7 @@ public class DetailsSimilarsRecyclerAdapter extends RecyclerView.Adapter<Details
         public TextView shippingView;
         public TextView daysView;
         public TextView costView;
+        public CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,6 +88,7 @@ public class DetailsSimilarsRecyclerAdapter extends RecyclerView.Adapter<Details
             shippingView = itemView.findViewById(R.id.similar_shipping);
             daysView = itemView.findViewById(R.id.similar_days);
             costView = itemView.findViewById(R.id.similar_cost);
+            cardView = itemView.findViewById(R.id.similar_card_view);
         }
     }
 }
