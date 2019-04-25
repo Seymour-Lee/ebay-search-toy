@@ -174,7 +174,6 @@
                 android:ems="10"
                 android:hint="Miles from"
                 android:inputType="textPersonName"
-                android:text="10"
                 android:textSize="@dimen/search_input_font_size"
                 android:visibility="visible" />
 

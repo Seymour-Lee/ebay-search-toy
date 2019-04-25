@@ -297,7 +297,8 @@ public class Details extends AppCompatActivity implements DetailsTabProduct.OnFr
                 }
             });
             feedbackScoreView.setText(seller.getString("feedback"));
-            popularityView.setScore(Integer.valueOf(seller.getString("popularity")));
+            // popularityView.setScore(Integer.valueOf(seller.getString("popularity")));
+            popularityView.setScore((int)Double.parseDouble(seller.getString("popularity")));
             feedbackStarView.setText(seller.getString("rating"));
             shippingCostView.setText(shipping.getString("cost"));
             globalShippingView.setText(product.getString("golablshipping").equals("true")? "Yes": "No");

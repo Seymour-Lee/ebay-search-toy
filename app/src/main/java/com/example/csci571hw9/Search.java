@@ -37,10 +37,11 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 // TODO:
+// 1. Skip rows in details tab, which are missing
 // 2. Star Icon in shipping tab
-// 3. in nodejs, store item json into file
-
-
+// 3. not enable nearby search, how to deal with zipcode?
+// 4. do not chop image
+// 5. clear button
 
 
 public class Search extends AppCompatActivity implements SearchTab1.OnFragmentInteractionListener, SearchTab2.OnFragmentInteractionListener{
